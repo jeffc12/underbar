@@ -263,8 +263,7 @@
     _.each(arguments, function(a) {
         args.push(a);
     })
-    
-    console.log(args);
+
     _.each(args, function(index) {
             for (var i in index) {
                 obj[i] = index[i];
@@ -283,6 +282,7 @@
               // starts but pushing first object into ojb
               // as long as obj[i] is not in the new obj
               // pushes the new key and property into it
+
               if (obj[i] === undefined) {
                 obj[i] = num1[i];
               }
@@ -333,6 +333,22 @@
   // already computed the result for the given argument and return that value
   // instead if possible.
   _.memoize = function(func) {
+
+    var storage = {};
+    var result;
+    var args = Array.prototype.slice.call(arguments);
+
+    return function() {
+
+          result = func.apply(this,args);
+        if (storage[args] === undefined) {
+          storeage[arges] = result;
+          return result;
+        }
+        return storage[args];
+    }
+
+
   };
 
   // Delays a function for the given number of milliseconds, and then calls
@@ -356,6 +372,20 @@
   // input array. For a tip on how to make a copy of an array, see:
   // http://mdn.io/Array.prototype.slice
   _.shuffle = function(array) {
+    var arrayCopy = array.slice(0,array.length);
+
+    var count = array.length;
+
+    while (count > 0) {
+      var index = Math.floor(Math.random() * count);
+      count--;
+
+      var moment = arrayCopy[count];
+      arrayCopy[count] = arrayCopy[index];
+      arrayCopy[index]=moment;
+    }
+
+    return arrayCopy;
   };
 
 
