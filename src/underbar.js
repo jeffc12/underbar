@@ -335,20 +335,25 @@
   _.memoize = function(func) {
 
     var storage = {};
-    var result;
-      var args = Array.prototype.slice.call(arguments);
+    var alreadyCalled = false;
 
     return function() {
-          result = func.apply(this,args);
+
+      var result = func.apply(this,arguments);
+      if (!alreadyCalled) {
         if (storage[result] === undefined) {
-          storeage[result] = result;
-          return result;
+          storage[result] = func.apply(this,arguments);
+        alreadyCalled = true;
         }
-        return storage[result];
+      }
+      console.log(storage);
+      return storage[result];
     }
 
 
-  };
+
+    }
+
 
   // Delays a function for the given number of milliseconds, and then calls
   // it with the arguments supplied.
