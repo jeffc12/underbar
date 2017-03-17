@@ -335,19 +335,17 @@
   _.memoize = function(func) {
 
     var storage = {};
-    var alreadyCalled = false;
 
     return function() {
-
-      var result = func.apply(this,arguments);
-      if (!alreadyCalled) {
-        if (storage[result] === undefined) {
-          storage[result] = func.apply(this,arguments);
-        alreadyCalled = true;
+      var result = Array.prototype.slice.call(arguments);
+      //if storage = undefined return key
+      console.log(result);
+        if (storage[result[0]] === undefined) {
+           storage[result] = func.apply(this, arguments);
         }
-      }
-      console.log(storage);
+
       return storage[result];
+
     }
 
 
