@@ -256,11 +256,40 @@
   //     bla: "even more stuff"
   //   }); // obj1 now contains key1, key2, key3 and bla
   _.extend = function(obj) {
+    var object0 = {};
+    // from defaults tip to convert to array
+    // using stackoverflow suggestion
+    var args = [];
+    _.each(arguments, function(a) {
+        args.push(a);
+    })
+    
+    console.log(args);
+    _.each(args, function(index) {
+            for (var i in index) {
+                obj[i] = index[i];
+            }
+        });
+        return obj;
   };
 
   // Like extend, but doesn't ever overwrite a key that already
   // exists in obj
   _.defaults = function(obj) {
+    var args = Array.prototype.slice.call(arguments);
+    //console.log(args);
+    _.each(args, function(num1) {
+          for (var i in num1) {
+              // starts but pushing first object into ojb
+              // as long as obj[i] is not in the new obj
+              // pushes the new key and property into it
+              if (obj[i] === undefined) {
+                obj[i] = num1[i];
+              }
+            }
+
+        });
+        return obj;
   };
 
 
