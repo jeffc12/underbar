@@ -336,16 +336,15 @@
 
     var storage = {};
     var result;
-    var args = Array.prototype.slice.call(arguments);
+      var args = Array.prototype.slice.call(arguments);
 
     return function() {
-
           result = func.apply(this,args);
-        if (storage[args] === undefined) {
-          storeage[arges] = result;
+        if (storage[result] === undefined) {
+          storeage[result] = result;
           return result;
         }
-        return storage[args];
+        return storage[result];
     }
 
 
@@ -358,6 +357,20 @@
   // parameter. For example _.delay(someFunction, 500, 'a', 'b') will
   // call someFunction('a', 'b') after 500ms
   _.delay = function(func, wait) {
+
+    var args = [];
+    _.each(arguments, function(a) {
+        args.push(a);
+    })
+    args = args.slice(2,args.length);
+
+    return setTimeout(function() {
+
+        return func.apply(this, args);
+
+    },wait)
+
+
   };
 
 
