@@ -202,9 +202,10 @@
         }
 
     var answer = _.reduce(collection, function(a,b){
+
       return (iterator(a) && b);
     },true)
-  
+
     if (answer === undefined || answer === null || answer === false || answer === 0) {
         return false;
     }
@@ -218,6 +219,20 @@
   // provided, provide a default one
   _.some = function(collection, iterator) {
     // TIP: There's a very clever way to re-use every() here.
+    if ( iterator === undefined) {
+        iterator = _.identity;
+      }
+      var count = 0;
+    var test = _.each(collection, function(index) {
+
+        if (iterator(index)) {
+          count++;
+        };
+    })
+    if ( count > 0) {
+      return true;
+    }
+  return false;
 
   };
 
